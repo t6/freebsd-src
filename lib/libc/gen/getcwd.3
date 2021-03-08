@@ -28,12 +28,13 @@
 .\"     @(#)getcwd.3	8.2 (Berkeley) 12/11/93
 .\" $FreeBSD$
 .\"
-.Dd April 17, 2010
+.Dd March 8, 2021
 .Dt GETCWD 3
 .Os
 .Sh NAME
 .Nm getcwd ,
-.Nm getwd
+.Nm getwd ,
+.Nm get_current_dir_name
 .Nd get working directory pathname
 .Sh LIBRARY
 .Lb libc
@@ -43,6 +44,8 @@
 .Fn getcwd "char *buf" "size_t size"
 .Ft char *
 .Fn getwd "char *buf"
+.Ft char *
+.Fn get_current_dir_name "void"
 .Sh DESCRIPTION
 The
 .Fn getcwd
@@ -75,11 +78,22 @@ argument and a size of
 (as defined in the include
 file
 .In sys/param.h ) .
-Obviously,
 .Fa buf
 should be at least
 .Dv MAXPATHLEN
 bytes in length.
+.Pp
+.Fn get_current_dir_name
+returns the value of the environment variable
+.Ev PWD
+if it points to the current directory.
+The value is returned verbatim.
+Symbolic links will not have been resolved.
+Relative paths will not have been made absolute.
+It falls back to 
+.Fn getcwd NULL 0
+otherwise.
+The return value must be freed.
 .Pp
 These routines have traditionally been used by programs to save the
 name of a working directory for the purpose of returning to it.
@@ -125,7 +139,9 @@ plus 1.
 .Pp
 The
 .Fn getcwd
-function
+and
+.Fn get_current_dir_name
+functions
 may fail if:
 .Bl -tag -width Er
 .It Bq Er EACCES
@@ -148,11 +164,17 @@ The ability to specify a
 pointer and have
 .Fn getcwd
 allocate memory as necessary is an extension.
+.Fn get_current_dir_name
+is an extension as well.
 .Sh HISTORY
 The
 .Fn getwd
 function appeared in
 .Bx 4.0 .
+The
+.Fn get_current_dir_name
+function first appeared in glibc 2.1 and was later added to
+.Fx 14.0 .
 .Sh BUGS
 The
 .Fn getwd

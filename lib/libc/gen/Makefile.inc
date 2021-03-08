@@ -395,6 +395,7 @@ MLINKS+=getcap.3 cgetcap.3 \
 	getcap.3 cgetset.3 \
 	getcap.3 cgetstr.3 \
 	getcap.3 cgetustr.3
+MLINKS+=getcwd.3 get_current_dir_name.3
 MLINKS+=getcwd.3 getwd.3
 MLINKS+=getcontext.3 getcontextx.3
 MLINKS+=getcontext.3 setcontext.3
