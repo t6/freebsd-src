@@ -3,6 +3,7 @@
 .include <src.opts.mk>
 
 ATF_TESTS_C+=		dynthr_test
+ATF_TESTS_C+=		get_current_dir_name_test
 ATF_TESTS_C+=		heapsort_test
 ATF_TESTS_C+=		mergesort_test
 ATF_TESTS_C+=		qsort_test
